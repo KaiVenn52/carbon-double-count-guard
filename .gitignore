@@ -4,6 +4,7 @@ dist/
 evidence/demo-raw/
 evidence/demo-audio/
 .review-package/
+.contest-package/
 Carbon-Guard-review.zip
 # Video is link-only by explicit user instruction; never commit media or review bundles.
 *.mp4

@@ -6,9 +6,11 @@ for(const name of ['style.css','favicon.svg'])await fs.copyFile(new URL('../publ
 let html=await fs.readFile(new URL('../public/index.html',import.meta.url),'utf8');
 html=html.replaceAll('href="/','href="./').replace('src="/app.js"','src="./app.js"').replace('<script type="module"','<script src="./vendor/ganache.js"></script><script type="module"');
 html=html.replace('Local prototype','Browser-local prototype').replace('Local EVM receipts prove execution only.','Browser-local EVM receipts prove execution only. Each tab has its own temporary ledger; reloading resets it.');
+html=html.replace('Starting local ledger…','Loading browser EVM (~8 MB)…').replace('id="review">','id="review" disabled>');
 await fs.writeFile(new URL('index.html',out),html);
 let app=await fs.readFile(new URL('../public/app.js',import.meta.url),'utf8');
 app=app.replace(/async function api\(path,body\).*?\r?\n/,'').replace("const $=", "import {api} from './browser-api.js';\nconst $=").replace('Local EVM · Chain 1337','Browser-local EVM · Chain 1337').replace('Restarting the server resets this ledger.','Reloading this page resets this tab’s ledger.');
+app=app.replace("state=await api('state');", "state=await api('state');$('review').disabled=false;");
 await fs.writeFile(new URL('app.js',out),app);
 let engine=await fs.readFile(new URL('engine.mjs',import.meta.url),'utf8');
 engine=engine.replace(/import \{ createHash \} from 'node:crypto';\r?\nexport const digest = .*?\r?\n/,"import {sha256,toUtf8Bytes} from './vendor/ethers.js';\nexport const digest = value => sha256(toUtf8Bytes(JSON.stringify(value)));\n");

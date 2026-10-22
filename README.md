@@ -8,6 +8,8 @@ Carbon Guard is a local evidence-review prototype for the **Carbon Markets & Emi
 
 ## Browser demo
 
+[Open the working browser demo](https://kaivenn52.github.io/carbon-double-count-guard/). Allow the bundled EVM runtime (about 8 MB) to load on the first visit; review is enabled after the local ledger is ready.
+
 The `docs/` build runs the Solidity contract inside each visitor's browser using Ganache and ethers. It needs no Node server, wallet, external RPC, credentials or funds. Each tab has an isolated temporary ledger. Reloading resets it. This static build can be served from a subdirectory; all runtime libraries are bundled locally, with license notices in `docs/vendor/`.
 
 Build it with `npm run build:hosted`. Run `npm run test:hosted` to test the static build using installed Chrome. Validation covers exact overlap, actual EVM recording, replay rejection, offline export consistency, responsive widths, reset on reload and absence of external requests. The Node application below remains available for local development.
