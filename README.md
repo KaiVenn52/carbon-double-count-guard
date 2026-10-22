@@ -55,7 +55,7 @@ Node 24 can print a Ganache native µWS compatibility warning before falling bac
 
 The video, review ZIP and internal submission records are intentionally excluded from this public source repository. Video sharing is authorized only as an unlisted link supplied separately to reviewers. The paths below describe the author's local review package; they are not files included in a source clone.
 
-The completed review file is `evidence/Carbon-Guard-Demo.mp4`: **4:17.88**, 1920×1080 H.264 video with AAC English narration and selectable English subtitles. It records the real running synthetic application. The narrator is an offline synthetic voice. The video is local and has not been published. Technical probe details are in `evidence/video-validation.json`.
+The completed review file is `evidence/Carbon-Guard-Demo.mp4`: **4:17.88**, 1920×1080 H.264 video with AAC English narration and selectable English subtitles. It records the real running synthetic application. The narrator is an offline synthetic voice. The video is shared separately as Unlisted and is intentionally absent from this public repository. Technical probe details are in `evidence/video-validation.json`.
 
 On Windows with Microsoft Zira Desktop and ffmpeg/ffprobe in PATH, run `./submission/make-narration.ps1`, then `node submission/record-demo.mjs`, then `node submission/render-demo.mjs`. The recorder starts its own fresh server on port 4389 and closes it afterward. It records the actual application, with offline synthetic narration and English captions. No video is uploaded by these scripts. The recording must be reviewed before publication.
 
@@ -68,3 +68,4 @@ The contract cannot detect the same real-world credit reidentified under another
 ## Primary sources and submission
 
 Official references: [ClimateChain Overview](https://ieee-climatechain-hack.devpost.com/), [Rules](https://ieee-climatechain-hack.devpost.com/rules), and [Verra's historical retirement/token notice](https://verra.org/verra-addresses-crypto-instruments-and-tokens/). The private review package contains the detailed rules audit, submission draft and readiness record. This source repository does not claim an accepted entry. Original implementation began on 2026-10-18. No prior project code was copied. Dependencies are third-party libraries under their respective licenses.
+
