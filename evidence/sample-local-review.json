@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCALLY_RECORDED",
+  "findings": [],
+  "overlaps": [],
+  "claim": {
+    "registry": "SYNTHETIC-DEMO",
+    "project": "FOREST-017",
+    "vintage": "2025",
+    "start": 61,
+    "end": 80,
+    "beneficiary": "Demo Logistics",
+    "owner": "Demo buyer",
+    "evidence": "fixture:claim-001"
+  },
+  "claimDigest": "0x914e449918da29cca9b1544548140f32c96d4b8679d517fc5bdd9d1f95d006f2",
+  "sourceSnapshot": {
+    "batch": {
+      "registry": "SYNTHETIC-DEMO",
+      "project": "FOREST-017",
+      "vintage": "2025",
+      "start": 1,
+      "end": 100
+    },
+    "history": [
+      {
+        "id": "ISSUE-001",
+        "type": "ISSUE",
+        "start": 1,
+        "end": 100,
+        "owner": "Demo project",
+        "date": "2026-10-01",
+        "evidence": "fixture:issuance-001"
+      },
+      {
+        "id": "TRANSFER-001",
+        "type": "TRANSFER",
+        "start": 1,
+        "end": 100,
+        "owner": "Demo buyer",
+        "date": "2026-10-03",
+        "evidence": "fixture:transfer-001"
+      },
+      {
+        "id": "RETIRE-001",
+        "type": "RETIRE",
+        "start": 1,
+        "end": 40,
+        "owner": "Demo buyer",
+        "beneficiary": "Demo Airline",
+        "date": "2026-10-10",
+        "evidence": "fixture:retirement-001"
+      }
+    ],
+    "retirements": [
+      {
+        "id": "RETIRE-001",
+        "type": "RETIRE",
+        "start": 1,
+        "end": 40,
+        "owner": "Demo buyer",
+        "beneficiary": "Demo Airline",
+        "date": "2026-10-10",
+        "evidence": "fixture:retirement-001"
+      }
+    ]
+  },
+  "evidenceDigest": "0xe5bce29e35976b554692bf03cb25e1b28bab98955bb376002b30a2043ca7f44c",
+  "scope": "Synthetic loaded dataset only; no certification or emissions claim.",
+  "receipt": {
+    "transactionHash": "0x94ec93f99a15fcb7fab5b2d930ee42083928066f187211540db42ab1ad1a3964",
+    "blockNumber": 3,
+    "chainId": 1337,
+    "contract": "0x8d11509d3C1c400f63e0500f7dD6c7D8Bbf7C6AB",
+    "network": "Ephemeral in-process local EVM",
+    "claimDigest": "0x914e449918da29cca9b1544548140f32c96d4b8679d517fc5bdd9d1f95d006f2",
+    "evidenceDigest": "0xe5bce29e35976b554692bf03cb25e1b28bab98955bb376002b30a2043ca7f44c"
+  },
+  "exportedAt": "2026-10-22T09:52:39.258Z"
+}
