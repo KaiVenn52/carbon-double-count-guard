@@ -4,7 +4,13 @@ Catch reuse of retired serials before another carbon claim is recorded.
 
 Carbon Guard is a local evidence-review prototype for the **Carbon Markets & Emissions Transparency** track of IEEE ClimateChain. A reviewer loads a proposed serial range, sees its issuance/transfer/retirement trail, and gets an explicit blocked decision when the range overlaps a prior retirement. A separate Solidity contract rejects reuse of namespaced serial keys even if an off-chain check is bypassed.
 
-**Evidence level:** synthetic records, deterministic local rules, and an ephemeral local EVM. No registry integration, certification, public deployment, real credits, tokens, or measured emissions reductions. No AI model is used at runtime. Development was AI-assisted.
+**Evidence level:** synthetic records, deterministic rules, and an ephemeral local EVM. No registry integration, certification, public-chain deployment, real credits, tokens, or measured emissions reductions. No AI model is used at runtime. Development was AI-assisted.
+
+## Browser demo
+
+The `docs/` build runs the Solidity contract inside each visitor's browser using Ganache and ethers. It needs no Node server, wallet, external RPC, credentials or funds. Each tab has an isolated temporary ledger. Reloading resets it. This static build can be served from a subdirectory; all runtime libraries are bundled locally, with license notices in `docs/vendor/`.
+
+Build it with `npm run build:hosted`. Run `npm run test:hosted` to test the static build using installed Chrome. Validation covers exact overlap, actual EVM recording, replay rejection, offline export consistency, responsive widths, reset on reload and absence of external requests. The Node application below remains available for local development.
 
 ## Run locally
 
