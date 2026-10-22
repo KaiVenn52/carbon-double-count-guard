@@ -1,0 +1,15 @@
+import http from 'node:http';
+import assert from 'node:assert/strict';
+const base=process.env.APP_URL||'http://127.0.0.1:4387';
+const claim={registry:'SYNTHETIC-DEMO',project:'FOREST-017',vintage:'2025',start:25,end:60,owner:'Demo buyer',beneficiary:'Demo Logistics',evidence:'fixture:claim-001'};
+const send=(path,body,headers={})=>fetch(base+path,{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body)});
+assert.equal((await send('/api/record',claim)).status,409);
+assert.equal((await send('/api/review',null)).status,200);
+assert.equal((await send('/api/record',claim,{Origin:'https://untrusted.example'})).status,403);
+assert.equal((await fetch(base+'/api/review',{method:'POST',body:'invalid'})).status,400);
+assert.equal((await fetch(base+'/api/review',{method:'POST',body:'x'.repeat(17000)})).status,413);
+const hostStatus=await new Promise((resolve,reject)=>{const r=http.get(base+'/api/state',{headers:{Host:'untrusted.example'}},res=>{res.resume();resolve(res.statusCode);});r.on('error',reject);});
+assert.equal(hostStatus,403);
+assert.equal((await fetch(base+'/not-a-route')).status,404);
+const headers=await fetch(base);assert.match(headers.headers.get('content-security-policy'),/frame-ancestors 'none'/);
+console.log('API checks passed: blocked record, null input, cross-origin, invalid JSON, size cap, forged Host, route allowlist, CSP.');

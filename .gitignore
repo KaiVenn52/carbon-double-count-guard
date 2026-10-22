@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.log
+evidence/demo-raw/
+evidence/demo-audio/
+.review-package/
+Carbon-Guard-review.zip
+# Video is link-only by explicit user instruction; never commit media or review bundles.
+*.mp4
+*.webm
+*.wav
+*.zip
+evidence/demo-timeline.json
+evidence/*discussion*.txt
+evidence/official-*.txt
+evidence/schedule.txt
+evidence/submissions-update.txt

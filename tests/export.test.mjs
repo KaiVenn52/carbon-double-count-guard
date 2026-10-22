@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {review,batch,digest} from '../src/engine.mjs';
+import {verifyExport} from '../src/verify-export.mjs';
+const claim={...batch,start:61,end:80,owner:'Demo buyer',beneficiary:'Demo Logistics',evidence:'fixture:claim-001'};
+test('export reproduces a review without server or EVM',()=>assert.equal(verifyExport(review(claim)).status,'INTERNALLY_CONSISTENT'));
+test('snapshot remains frozen when live retirement list changes',()=>{const retirements=[];const result=review(claim,retirements);retirements.push({start:61,end:80});assert.equal(result.sourceSnapshot.retirements.length,0);assert.equal(digest(result.sourceSnapshot),result.evidenceDigest);});
+test('edited source is detected',()=>{const result=review(claim);result.sourceSnapshot.retirements[0].end=80;assert.equal(verifyExport(result).status,'INCONSISTENT');});
+test('edited claim is detected',()=>{const result=review(claim);result.claim.beneficiary='Other';assert.equal(verifyExport(result).status,'INCONSISTENT');});
+test('edited decision is detected even if digests are untouched',()=>{const result=review({...claim,start:25,end:60});result.status='READY_FOR_LOCAL_RECORD';assert.equal(verifyExport(result).status,'INCONSISTENT');});
+test('legacy export is explicitly unverifiable',()=>assert.equal(verifyExport({status:'LOCALLY_RECORDED'}).status,'UNVERIFIABLE'));
+test('malformed source and missing claim fail without throwing',()=>assert.equal(verifyExport({schemaVersion:1,sourceSnapshot:{}}).status,'INCONSISTENT'));
+test('mismatched receipt evidence is detected',()=>{const result=review(claim);result.status='LOCALLY_RECORDED';result.receipt={claimDigest:result.claimDigest,evidenceDigest:digest('different'),chainId:1337,blockNumber:3,transactionHash:'0x'+'a'.repeat(64),contract:'0x'+'b'.repeat(40)};assert.equal(verifyExport(result).status,'INCONSISTENT');});

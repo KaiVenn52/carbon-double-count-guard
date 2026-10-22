@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {review,batch,serialIdentities} from '../src/engine.mjs';
+const good={...batch,start:61,end:80,owner:'Demo buyer',beneficiary:'Demo Logistics',evidence:'fixture:claim-001'};
+test('unused range is reviewable within fixture scope',()=>assert.equal(review(good).status,'READY_FOR_LOCAL_RECORD'));
+test('partial overlap blocks entire claim and returns exact intersection',()=>{const r=review({...good,start:25,end:60});assert.equal(r.status,'BLOCKED');assert.deepEqual(r.overlaps,[{event:'RETIRE-001',start:25,end:40,beneficiary:'Demo Airline'}]);});
+test('inclusive boundary cannot be reused',()=>assert.equal(review({...good,start:40,end:41}).status,'BLOCKED'));
+test('adjacent non-overlap remains clear',()=>assert.equal(review({...good,start:41,end:41}).status,'READY_FOR_LOCAL_RECORD'));
+for(const [name,patch,code] of [['inverted',{start:80,end:61},'INVALID_RANGE'],['fraction',{start:1.5},'INVALID_RANGE'],['huge',{end:Number.MAX_SAFE_INTEGER},'INVALID_RANGE'],['unissued',{start:101,end:120},'OUTSIDE_ISSUANCE'],['unknown registry',{registry:'OTHER'},'UNKNOWN_IDENTITY'],['wrong owner',{owner:'Stranger'},'OWNER_MISMATCH'],['blank beneficiary',{beneficiary:''},'MISSING_BENEFICIARY'],['untrusted evidence',{evidence:'https://example.com'},'UNVERIFIED_EVIDENCE']])test(name+' fails closed',()=>assert.ok(review({...good,...patch}).findings.some(f=>f.code===code)));
+test('null input is blocked',()=>assert.equal(review(null).status,'BLOCKED'));
+test('serial identity includes registry project vintage',()=>{assert.notEqual(serialIdentities(good)[0],serialIdentities({...good,vintage:'2024'})[0]);});
+test('new local retirement blocks a later claim',()=>assert.equal(review(good,[{id:'LOCAL-1',start:70,end:75,beneficiary:'Demo'}]).status,'BLOCKED'));
